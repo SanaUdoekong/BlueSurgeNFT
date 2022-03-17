@@ -1,0 +1,8 @@
+
+pragma solidity ^0.8.7;
+
+struct external Metadata{
+  "description": "The BlueSurge NFT.",
+  "image": "https://ipfs.io/ipfs/QmabU2yfoxwW9jswySqp9XrUh7XRUvc3YjiuZ5KZ2o2zLq",
+  "name": "BlueSurge"
+}
