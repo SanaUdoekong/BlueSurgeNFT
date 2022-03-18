@@ -22,7 +22,7 @@ contract BlueSurgeToken {
         name = "BlueSurgeToken";
         symbol = "BST";
         decimals = 18;
-        totalSupply = 1000000; 
+        totalSupply = 1000000 * 10 ** 18; 
         balanceOf[msg.sender] = totalSupply;
     }
  
