@@ -7,22 +7,17 @@ contract BlueSurgeNFT{
   // My Variables
     string public name;
     string public symbol;
+    mapping (uint256 => string) internal idToUri; 
+    string constant NOT_VALID_NFT = "003002";
 
     mapping(uint256 => address) private _owners;
     mapping(address => uint256) private _balances;
+    mapping (uint256 => address) internal idToOwner;
 
     constructor() {
         name = "BlueSurgeToken";
         symbol = "BST";
     }
-
-  
- 
-  function mint(address _to, uint256 _tokenId) external {
-    _mint(_to, _tokenId);
-  }
-
-  
 
     function _baseURI() internal view virtual returns (string memory) {
         return "";
@@ -69,5 +64,43 @@ contract BlueSurgeNFT{
         address to,
         uint256 tokenId
     ) internal virtual {}
+
+    
+  modifier validNFToken(
+    uint256 _tokenId
+  )
+  {
+    require(idToOwner[_tokenId] != address(0), NOT_VALID_NFT);
+    _;
+  }
+
+   
+  function _setTokenUri(
+    uint256 _tokenId,
+    string memory _uri
+  )
+    internal
+  {
+    idToUri[_tokenId] = _uri;
+  }
+
+    function mint(address _to, uint256 _tokenId, string calldata _uri) external {
+        _mint(_to, _tokenId);
+        _setTokenUri(_tokenId, _uri);
+    }
+
+    function tokenURI(
+    uint256 _tokenId
+  )
+    external
+    view
+    returns (string memory)
+  {
+    return _tokenURI(_tokenId);
+  }
+
+  function _tokenURI(uint256 _tokenId)internal virtual view returns (string memory){
+    return idToUri[_tokenId];
+  }
 
 }
