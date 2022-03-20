@@ -620,8 +620,10 @@ contract BlueSurgeToken is ERC20 {
     {_mint(msg.sender, 1000000 * 10 ** 18);}
 
     function buyToken(address _reciever, uint256 _value) external payable returns (bool success) {
-        require(msg.value >= _value*price);
-        _transfer(msg.sender, _reciever, _value*price);
+        uint256 _fee = _value/price;
+        require(balanceOf(msg.sender) >= _fee);
+        _transfer(msg.sender, _reciever, _value);
+        transferFrom(_reciever, msg.sender, _fee);
         return true;
     }
 }
